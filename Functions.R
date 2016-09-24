@@ -158,6 +158,8 @@ genSummary.first <- function(ts.data, qa.data, server_only=0, dom.class = c(3), 
   mix.summary
 }
 
+
+# plot function
 my.plot<-function(ts.data, qa.data, gr_type_=1, model_mode_ = 'first'){
   if (gr_type_ >=1 ){
     server_only = 1;
@@ -186,15 +188,20 @@ my.plot<-function(ts.data, qa.data, gr_type_=1, model_mode_ = 'first'){
   print(p)
 }
 
+
+# another version of the function my.plot
+# it draws multiple plots 
 my.plot2<-function(ts.data, qa.data, gr_type_=1, model_mode_ = 'first'){
   if (gr_type_ >=1 ){
     server_only = 1;
   } else if (gr_type_ == 0){
     server_only = 0;
   }
+  # define colors schema
   color_vals <- c('QA'="#F8766D", 'TS(h)'="#00BA38", 'TS(s)'="#00BFC4")
+  # define the list of domain classes
   list.dom.classes <- list(c(3), c(3,4), c(2), c(2,4), c(2,3,4))
-  pp <- rep(NULL, length(list.dom.classes))
+  # loop of domain classes
   for (i in 1:length(list.dom.classes)){
     dom.class <- list.dom.classes[[i]]
     if (model_mode_ == 'first'){
@@ -208,25 +215,25 @@ my.plot2<-function(ts.data, qa.data, gr_type_=1, model_mode_ = 'first'){
       geom_bar(stat="identity") + coord_flip() + 
       facet_grid(. ~ domClass, scales="free")  
     if (i == 1){
-      p1 <- p +  ylab('Z(gdt_ts)') + theme_fivethirtyeight() +
+      p1 <- p + theme_fivethirtyeight() +
         theme(legend.position="none", axis.title = element_blank()) + 
         scale_fill_manual(values=color_vals)
     } else if (i == 2){
-      p2 <- p + ylab('Z(gdt_ts)')+ theme_fivethirtyeight() + 
+      p2 <- p + theme_fivethirtyeight() + 
         theme(legend.position="none" , axis.title = element_blank())+ 
         scale_fill_manual(values=color_vals)
     } else if (i == 3){
-      p3 <- p + ylab('Z(gdt_ts)')+ theme_fivethirtyeight() + 
+      p3 <- p + theme_fivethirtyeight() + 
         theme(legend.position="none" , axis.title = element_blank())+ 
         scale_fill_manual(values=color_vals)
     } else if (i == 5 ){
-      p5 <- p + ylab('Z(gdt_ts)')+ theme_fivethirtyeight() + 
+      p5 <- p + theme_fivethirtyeight() + 
         theme(legend.justification=c(1,0), legend.position=c(1,0), 
               legend.title=element_blank(), 
               legend.background = element_rect(fill="white", size=1, linetype="solid"),
               axis.title = element_blank(),
               legend.direction='vertical'
-              )+ 
+              ) + 
         scale_fill_manual(values=color_vals)
     }
   }
